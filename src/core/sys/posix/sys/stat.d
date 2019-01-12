@@ -804,36 +804,41 @@ else version (Darwin)
 }
 else version (FreeBSD)
 {
-    // https://github.com/freebsd/freebsd/blob/master/sys/sys/stat.h
 
     struct stat_t
     {
         dev_t       st_dev;
         ino_t       st_ino;
-        mode_t      st_mode;
         nlink_t     st_nlink;
+        mode_t      st_mode;
+        ushort      __st_padding0;
         uid_t       st_uid;
         gid_t       st_gid;
+        uint        __st_padding1;
         dev_t       st_rdev;
 
+        int         st_atime_ext;
         time_t      st_atime;
         c_long      __st_atimensec;
+        
+        int         st_mtime_ext;
         time_t      st_mtime;
         c_long      __st_mtimensec;
+        
+        int         st_ctime_ext;
         time_t      st_ctime;
         c_long      __st_ctimensec;
+
+        int         st_birthtime_ext;
+        time_t      st_birthtime;
+        c_long      st_birthtimensec;
 
         off_t       st_size;
         blkcnt_t    st_blocks;
         blksize_t   st_blksize;
         fflags_t    st_flags;
-        uint        st_gen;
-        int         st_lspare;
-
-        time_t      st_birthtime;
-        c_long      st_birthtimensec;
-
-        ubyte[16 - timespec.sizeof] padding;
+        ulong       st_gen;
+        ulong[10]   st_lspare;
     }
 
     enum S_IRUSR    = 0x100; // octal 0000400
