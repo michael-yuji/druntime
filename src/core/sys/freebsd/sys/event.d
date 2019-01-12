@@ -49,6 +49,17 @@ struct kevent_t
     short       filter; /* filter for event */
     ushort       flags;
     uint        fflags;
+    long          data;
+    void        *udata; /* opaque user data identifier */
+    long[4]        ext;
+}
+
+struct kevent32_t
+{
+    uintptr_t    ident; /* identifier for this event */
+    short       filter; /* filter for event */
+    ushort       flags;
+    uint        fflags;
     intptr_t      data;
     void        *udata; /* opaque user data identifier */
 }
